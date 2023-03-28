@@ -1,0 +1,103 @@
+specVersion: 0.0.5
+schema:
+  file: schema.graphql
+dataSources:
+  - kind: ethereum
+    name: Factory
+    network: polygon-zkevm
+    source:
+      address: "0x4B9f4d2435Ef65559567e5DbFC1BbB37abC43B57"
+      abi: Factory
+      startBlock: 300
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Pool
+        - Token
+      abis:
+        - name: Factory
+          file: Factory/abis/factory.json
+        - name: ERC20
+          file: Factory/abis/ERC20.json
+        - name: ERC20SymbolBytes
+          file: Factory/abis/ERC20SymbolBytes.json
+        - name: ERC20NameBytes
+          file: Factory/abis/ERC20NameBytes.json
+        - name: Pool
+          file: Factory/abis/pool.json
+      eventHandlers:
+        - event: Pool(indexed address,indexed address,address)
+          handler: handlePoolCreated
+      file: Factory/Factory.wasm
+  - kind: ethereum
+    name: NonfungiblePositionManager
+    network: polygon-zkevm
+    source:
+      address: "0xd8E1E7009802c914b0d39B31Fc1759A865b727B1"
+      abi: NonfungiblePositionManager
+      startBlock: 300
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      entities:
+        - Pool
+        - Token
+        - Deposit
+      abis:
+        - name: NonfungiblePositionManager
+          file: NonfungiblePositionManager/abis/NonfungiblePositionManager.json
+        - name: Pool
+          file: NonfungiblePositionManager/abis/pool.json
+        - name: Factory
+          file: NonfungiblePositionManager/abis/factory.json
+        - name: ERC20
+          file: NonfungiblePositionManager/abis/ERC20.json
+      eventHandlers:
+        - event: Collect(indexed uint256,address,uint256,uint256)
+          handler: handleCollect
+        - event: DecreaseLiquidity(indexed uint256,uint128,uint256,uint256)
+          handler: handleDecreaseLiquidity
+        - event: IncreaseLiquidity(indexed uint256,uint128,uint128,uint256,uint256,address)
+          handler: handleIncreaseLiquidity
+        - event: Transfer(indexed address,indexed address,indexed uint256)
+          handler: handleTransfer
+      file: NonfungiblePositionManager/NonfungiblePositionManager.wasm
+templates:
+  - kind: ethereum/contract
+    name: Pool
+    network: polygon-zkevm
+    source:
+      abi: Pool
+    mapping:
+      kind: ethereum/events
+      apiVersion: 0.0.7
+      language: wasm/assemblyscript
+      file: templates/Pool/Pool.wasm
+      entities:
+        - Pool
+        - Token
+      abis:
+        - name: Pool
+          file: Pool/abis/pool.json
+        - name: Factory
+          file: Pool/abis/factory.json
+        - name: ERC20
+          file: Pool/abis/ERC20.json
+      eventHandlers:
+        - event: Initialize(uint160,int24)
+          handler: handleInitialize
+        - event: Swap(indexed address,indexed address,int256,int256,uint160,uint128,int24)
+          handler: handleSwap
+        - event: Mint(address,indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: handleMint
+        - event: Burn(indexed address,indexed int24,indexed int24,uint128,uint256,uint256)
+          handler: handleBurn
+        - event: Fee(uint16)
+          handler: handleChangeFee
+        - event: Collect(indexed address,address,indexed int24,indexed int24,uint128,uint128)
+          handler: handleCollect
+        - event: CommunityFee(uint8,uint8)
+          handler: handleSetCommunityFee
