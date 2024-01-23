@@ -149,6 +149,8 @@ export function handlePoolCreated(event: PoolEvent): void {
   pool.collectedFeesToken0 = ZERO_BD
   pool.collectedFeesToken1 = ZERO_BD
   pool.collectedFeesUSD = ZERO_BD
+  pool.tick = ZERO_BI
+  pool.untrackedFeesUSD = ZERO_BD
 
   pool.save()
   // create the tracked contract based on the template
