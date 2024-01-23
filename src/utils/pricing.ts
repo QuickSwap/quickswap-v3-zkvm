@@ -4,18 +4,25 @@ import { Bundle, Pool, Token } from './../types/schema'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { exponentToBigDecimal, safeDiv } from '../utils/index'
 
-const WMatic_ADDRESS = '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9'//WETH
-const USDC_WMatic_03_POOL = '0xc44ad482f24fd750caeba387d2726d8653f8c4bb'
+const WMatic_ADDRESS = '0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101'//WETH
+const USDC_WMatic_03_POOL = '0x8fd5a7bd4dabff1f003a501dfd0b629c532a428f'
 
 // token where amounts should contribute to tracked volume and liquidity
 // usually tokens that many tokens are paired with s
 export let WHITELIST_TOKENS: string[] = [
-  '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9', // WETH
-  '0x1e4a5963abfd975d8c9021ce480b42188849d41d', // USDT
-  '0xa2036f0538221a77a3937f1379699f44945018d0', //MATIC
-  '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035', //USDC
-  '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4', //DAI
-  '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1', //WBTC
+  "0xb7ddc6414bf4f5515b52d8bdd69973ae205ff101", //WDOGE
+  '0xb44a9b6905af7c801311e8f4e76932ee959c663c', // WETH
+  '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d', // USDT
+  '0xdc42728b0ea910349ed3c6e1c9dc06b5fb591f98', //MATIC
+  '0x765277eebeca2e31912c9946eae1021199b39c61', //USDC
+  '0x582daef1f36d6009f64b74519cfd612a8467be18', //DD
+  '0xfa9343c3897324496a05fc75abed6bac29f8a40f', //WBTC
+  '0xb12c13e66ade1f72f71834f2fc5082db8c091358', //QUICK
+  '0x7b4328c127b85369d9f82ca0503b000d09cf9180', //DC
+  '0xf480f38c366daac4305dc484b2ad7a496ff00cea', //DOGIRA
+  '0x91cd28e57b92e34124c4540ee376c581d188b53e', //DCGOD
+  '0xB9fcAa7590916578087842e017078D7797Fa18D0', //DOGETOOLS
+  '0x35EA0c670eD9f54Ac07B648aCF0F2EB173A6012D' //TDH
 ]
 
 let MINIMUM_Matic_LOCKED = BigDecimal.fromString('0.1')
@@ -23,9 +30,8 @@ let MINIMUM_Matic_LOCKED = BigDecimal.fromString('0.1')
 let Q192 = Math.pow(2, 192)
 
 let STABLE_COINS: string[] = [
-  '0x1e4a5963abfd975d8c9021ce480b42188849d41d', // USDT
-  '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035', //USDC
-  '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4' //DAI
+  '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d', // USDT
+  '0x765277eebeca2e31912c9946eae1021199b39c61' //USDC
 ]
 
 
@@ -44,7 +50,7 @@ export function priceToTokenPrices(price: BigInt, token0: Token, token1: Token):
 export function getEthPriceInUSD(): BigDecimal {
   let usdcPool = Pool.load(USDC_WMatic_03_POOL) // WETH is token0
   if (usdcPool !== null) {
-    return usdcPool.token1Price
+    return usdcPool.token0Price
   } else {
     return ZERO_BD
   }
