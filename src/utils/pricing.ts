@@ -31,6 +31,7 @@ let Q192 = Math.pow(2, 192)
 
 let STABLE_COINS: string[] = [
   '0xe3f5a90f9cb311505cd691a46596599aa1a0ad7d', // USDT
+  '0x639a647fbe20b6c8ac19e48e2de44ea792c62c5c', // DAI
   '0x765277eebeca2e31912c9946eae1021199b39c61' //USDC
 ]
 
