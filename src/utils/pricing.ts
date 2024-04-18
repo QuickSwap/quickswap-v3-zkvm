@@ -16,6 +16,9 @@ export let WHITELIST_TOKENS: string[] = [
   '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035', //USDC
   '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4', //DAI
   '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1', //WBTC
+  '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5', //USDC.E
+  '0x744c5860ba161b5316f7e80d9ec415e2727e5bd5', //DAI.E
+  '0xbf6de60ccd9d22a5820a658fbe9fc87975ea204f' //wstETH
 ]
 
 let MINIMUM_Matic_LOCKED = BigDecimal.fromString('0.1')
@@ -25,7 +28,9 @@ let Q192 = Math.pow(2, 192)
 let STABLE_COINS: string[] = [
   '0x1e4a5963abfd975d8c9021ce480b42188849d41d', // USDT
   '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035', //USDC
-  '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4' //DAI
+  '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4', //DAI
+  '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5', //USDC.E
+  '0x744c5860ba161b5316f7e80d9ec415e2727e5bd5' //DAI.E
 ]
 
 
