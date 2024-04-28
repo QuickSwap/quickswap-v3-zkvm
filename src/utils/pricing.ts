@@ -4,21 +4,18 @@ import { Bundle, Pool, Token } from './../types/schema'
 import { BigDecimal, BigInt } from '@graphprotocol/graph-ts'
 import { exponentToBigDecimal, safeDiv } from '../utils/index'
 
-const WMatic_ADDRESS = '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9'//WETH
-const USDC_WMatic_03_POOL = '0xc44ad482f24fd750caeba387d2726d8653f8c4bb'
+const WMatic_ADDRESS = '0xe538905cf8410324e03a5a23c1c177a474d59b2b'//WETH
+const USDC_WMatic_03_POOL = '0x2b59b462103efaa4d04e869d62985b43b46a93c9'
 
 // token where amounts should contribute to tracked volume and liquidity
 // usually tokens that many tokens are paired with s
 export let WHITELIST_TOKENS: string[] = [
-  '0x4f9a0e7fd2bf6067db6994cf12e4495df938e6e9', // WETH
+  '0xe538905cf8410324e03a5a23c1c177a474d59b2b', // WOKB
   '0x1e4a5963abfd975d8c9021ce480b42188849d41d', // USDT
-  '0xa2036f0538221a77a3937f1379699f44945018d0', //MATIC
-  '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035', //USDC
+  '0x74b7f16337b8972027f6196a17a631ac6de26d22', //USDC
   '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4', //DAI
   '0xea034fb02eb1808c2cc3adbc15f447b93cbe08e1', //WBTC
-  '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5', //USDC.E
-  '0x744c5860ba161b5316f7e80d9ec415e2727e5bd5', //DAI.E
-  '0xbf6de60ccd9d22a5820a658fbe9fc87975ea204f' //wstETH
+  '0x5a77f1443d16ee5761d310e38b62f77f726bc71c' //WETH
 ]
 
 let MINIMUM_Matic_LOCKED = BigDecimal.fromString('0.1')
@@ -27,10 +24,8 @@ let Q192 = Math.pow(2, 192)
 
 let STABLE_COINS: string[] = [
   '0x1e4a5963abfd975d8c9021ce480b42188849d41d', // USDT
-  '0xa8ce8aee21bc2a48a5ef670afcc9274c7bbbc035', //USDC
-  '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4', //DAI
-  '0x37eaa0ef3549a5bb7d431be78a3d99bd360d19e5', //USDC.E
-  '0x744c5860ba161b5316f7e80d9ec415e2727e5bd5' //DAI.E
+  '0x74b7f16337b8972027f6196a17a631ac6de26d22', //USDC
+  '0xc5015b9d9161dca7e18e32f6f25c4ad850731fd4' //DAI
 ]
 
 
@@ -49,7 +44,7 @@ export function priceToTokenPrices(price: BigInt, token0: Token, token1: Token):
 export function getEthPriceInUSD(): BigDecimal {
   let usdcPool = Pool.load(USDC_WMatic_03_POOL) // WETH is token0
   if (usdcPool !== null) {
-    return usdcPool.token1Price
+    return usdcPool.token0Price
   } else {
     return ZERO_BD
   }
